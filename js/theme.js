@@ -16,10 +16,7 @@ const applyTheme = (theme) => {
   }
 };
 
-// 페이지 렌더 전 즉시 적용 (깜빡임 방지)
-applyTheme(getInitialTheme());
-
-// DOM 준비 후 토글 버튼 연결
+// DOM 준비 후 테마 아이콘 갱신 및 토글 버튼 연결
 document.addEventListener("DOMContentLoaded", () => {
   applyTheme(document.documentElement.dataset.theme || getInitialTheme());
   const themeToggle = document.getElementById("theme-toggle");

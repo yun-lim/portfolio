@@ -57,6 +57,10 @@ portfolio/
 │   ├── form.js
 │   └── main.js
 ├── images/profile.svg
+├── screenshots/
+│   ├── desktop.png
+│   ├── mobile.png
+│   └── dark-mode.png
 └── README.md
 ```
 
@@ -111,13 +115,19 @@ git push -u origin main
 
 ## 스크린샷
 
-배포 후 `screenshots/` 폴더에 아래 3장을 추가하세요.
+MISSION.md 제출 요구사항: 데스크톱 / 모바일 / 다크모드
 
-| 파일 | 설명 |
-|------|------|
-| `screenshots/desktop.png` | 데스크톱 화면 |
-| `screenshots/mobile.png` | 모바일 화면 |
-| `screenshots/dark-mode.png` | 다크 모드 화면 |
+### 데스크톱 (라이트 모드)
+
+![데스크톱 화면](./screenshots/desktop.png)
+
+### 모바일 (반응형 + 햄버거 메뉴)
+
+![모바일 화면](./screenshots/mobile.png)
+
+### 다크 모드
+
+![다크 모드 화면](./screenshots/dark-mode.png)
 
 ## 라이선스
 
