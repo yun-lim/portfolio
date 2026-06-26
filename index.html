@@ -186,6 +186,26 @@
 
         <h3 class="projects-api-title fade-in">GitHub Repositories</h3>
 
+        <!-- GitHub User ID 입력 → API 호출 (동료 평가 E-2 데모용) -->
+        <form class="github-search fade-in" id="github-search-form" novalidate>
+          <label for="github-username">GitHub User ID</label>
+          <div class="github-search-row">
+            <input
+              type="text"
+              id="github-username"
+              name="github-username"
+              placeholder="예: yun-lim"
+              autocomplete="off"
+              spellcheck="false"
+            >
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+          <p class="github-api-hint">
+            Endpoint: <code>https://api.github.com/users/{id}/repos</code>
+          </p>
+          <span class="error-message" id="github-username-error"></span>
+        </form>
+
         <!-- 언어별 필터 (보너스: array.filter 활용) -->
         <div class="project-filters fade-in" id="project-filters" hidden>
           <button type="button" class="filter-btn active" data-filter="all">All</button>

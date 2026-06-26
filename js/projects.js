@@ -1,14 +1,34 @@
-// GitHub API: 상태 관리 → Projects 섹션 렌더링
+// GitHub API: User ID 입력 → 상태 변경 → Projects 섹션 렌더링
 const projectsContainer = document.getElementById("projects-container");
 const projectFilters = document.getElementById("project-filters");
+const githubSearchForm = document.getElementById("github-search-form");
+const githubUsernameInput = document.getElementById("github-username");
+const githubUsernameError = document.getElementById("github-username-error");
 
 // API 상태 객체 (loading | success | error | empty)
 const projectState = {
   status: "loading",
+  username: CONFIG.GITHUB_USERNAME,
   repos: [],
   filteredRepos: [],
   activeFilter: "all",
   error: null,
+};
+
+// 입력값 검증 → 에러 메시지 표시
+const validateUsername = (username) => {
+  if (!username.trim()) {
+    if (githubUsernameError) {
+      githubUsernameError.textContent = "GitHub User ID를 입력해주세요.";
+    }
+    if (githubUsernameInput) {
+      githubUsernameInput.classList.add("invalid");
+    }
+    return false;
+  }
+  if (githubUsernameError) githubUsernameError.textContent = "";
+  if (githubUsernameInput) githubUsernameInput.classList.remove("invalid");
+  return true;
 };
 
 // 저장소 카드 HTML 생성 - map + 구조분해 할당 + 템플릿 리터럴
@@ -25,6 +45,15 @@ const createProjectCard = ({ name, description, html_url, stargazers_count, lang
       </div>
     </article>
   `;
+};
+
+// 필터 UI 초기화
+const resetFilters = () => {
+  projectState.activeFilter = "all";
+  if (projectFilters) {
+    projectFilters.hidden = true;
+    projectFilters.innerHTML = `<button type="button" class="filter-btn active" data-filter="all">All</button>`;
+  }
 };
 
 // 필터 버튼 렌더링 - forEach + Set으로 언어 목록 추출
@@ -62,11 +91,18 @@ const applyFilter = () => {
   renderProjects();
 };
 
+// HTTP 상태 코드별 에러 메시지
+const getErrorMessage = (status) => {
+  if (status === 404) return "존재하지 않는 GitHub User ID입니다.";
+  if (status === 403) return "API 요청 한도를 초과했습니다. (403)";
+  return `프로젝트를 불러올 수 없습니다. (HTTP ${status})`;
+};
+
 // 상태에 따라 Projects UI 렌더링
 const renderProjects = () => {
   if (!projectsContainer) return;
 
-  const { status, filteredRepos, repos } = projectState;
+  const { status, filteredRepos, repos, error } = projectState;
 
   if (status === "loading") {
     projectsContainer.innerHTML = `
@@ -79,13 +115,14 @@ const renderProjects = () => {
   }
 
   if (status === "error") {
+    const message = error?.status ? getErrorMessage(error.status) : "프로젝트를 불러올 수 없습니다.";
     projectsContainer.innerHTML = `
       <div class="projects-status">
-        <p>프로젝트를 불러올 수 없습니다.</p>
+        <p>${message}</p>
         <button type="button" class="btn btn-primary retry-btn" id="retry-btn">다시 시도</button>
       </div>
     `;
-    document.getElementById("retry-btn")?.addEventListener("click", fetchRepos);
+    document.getElementById("retry-btn")?.addEventListener("click", () => fetchRepos());
     return;
   }
 
@@ -104,16 +141,24 @@ const renderProjects = () => {
 
 // GitHub API fetch - async/await + try/catch
 const fetchRepos = async () => {
+  const username = githubUsernameInput?.value.trim() ?? projectState.username;
+
+  if (!validateUsername(username)) return;
+
+  projectState.username = username;
   projectState.status = "loading";
   projectState.error = null;
+  resetFilters();
   renderProjects();
 
   try {
-    const url = `https://api.github.com/users/${CONFIG.GITHUB_USERNAME}/repos?sort=updated&per_page=12`;
+    const url = `https://api.github.com/users/${encodeURIComponent(username)}/repos?sort=updated&per_page=12`;
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+      const err = new Error(getErrorMessage(response.status));
+      err.status = response.status;
+      throw err;
     }
 
     const data = await response.json();
@@ -127,11 +172,36 @@ const fetchRepos = async () => {
   } catch (err) {
     projectState.status = "error";
     projectState.error = err;
+    resetFilters();
   }
 
   renderProjects();
 };
 
-document.addEventListener("DOMContentLoaded", fetchRepos);
+// 폼 submit → User ID로 API 재호출
+if (githubSearchForm) {
+  githubSearchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    fetchRepos();
+  });
+}
+
+// input 이벤트: 입력 중 User ID 에러 제거
+if (githubUsernameInput) {
+  githubUsernameInput.addEventListener("input", () => {
+    if (githubUsernameInput.value.trim()) {
+      githubUsernameInput.classList.remove("invalid");
+      if (githubUsernameError) githubUsernameError.textContent = "";
+    }
+  });
+}
+
+// 페이지 로드 시 기본 User ID로 첫 fetch
+document.addEventListener("DOMContentLoaded", () => {
+  if (githubUsernameInput) {
+    githubUsernameInput.value = CONFIG.GITHUB_USERNAME;
+  }
+  fetchRepos();
+});
 
 window.projectsModule = { fetchRepos, projectState };
