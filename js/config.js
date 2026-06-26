@@ -1,0 +1,7 @@
+// 프로젝트 전역 설정 - GitHub API 등 상수 관리
+const CONFIG = {
+  GITHUB_USERNAME: "yun-lim",
+  NAV_SCROLL_THRESHOLD: 60,
+  SCROLL_TOP_THRESHOLD: 300,
+  OBSERVER_THRESHOLD: 0.2,
+};
