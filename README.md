@@ -2,6 +2,9 @@
 
 Daegyun Im의 개인 포트폴리오입니다. AI automation, vibe coding, Notion 워크플로우를 중심으로 한 실제 경력과 프로젝트를 담았습니다.
 
+## 배포 URL
+- **GitHub 저장소**: https://github.com/yun-lim/portfolio
+- **Live Site**: https://yun-lim.github.io/portfolio/
 - **공식 사이트**: https://daegyun.im
 - **연락처**: peter@thelongest.ai
 
@@ -107,11 +110,6 @@ git branch -M main
 git remote add origin git@github.com:{username}/portfolio.git
 git push -u origin main
 ```
-
-## 배포 URL
-
-- **GitHub 저장소**: https://github.com/yun-lim/portfolio
-- **Live Site**: https://yun-lim.github.io/portfolio/
 
 ## 스크린샷
 
