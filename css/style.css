@@ -178,6 +178,37 @@ img { max-width: 100%; height: auto; display: block; }
 .about-image img:hover { transform: scale(1.02); }
 .about-text p { color: var(--color-text-muted); margin-bottom: var(--spacing-sm); }
 .about-text p:last-child { margin-bottom: 0; }
+.about-highlight {
+  margin-top: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.featured-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+.projects-api-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+.contact-email {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+.contact-email a {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: color var(--transition);
+}
+.contact-email a:hover { color: var(--color-primary-hover); }
 
 .skills-grid {
   display: grid;

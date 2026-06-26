@@ -1,7 +1,9 @@
-# Portfolio Website (B4-1)
+# Portfolio Website (B4-1) — daegyun.im
 
-순수 HTML, CSS, JavaScript로 만든 반응형 개인 포트폴리오 웹사이트입니다.  
-GitHub API 연동, 다크 모드, 폼 유효성 검사 등 웹 프론트엔드 핵심 개념을 Vanilla JS로 구현했습니다.
+Daegyun Im의 개인 포트폴리오입니다. AI automation, vibe coding, Notion 워크플로우를 중심으로 한 실제 경력과 프로젝트를 담았습니다.
+
+- **공식 사이트**: https://daegyun.im
+- **연락처**: peter@thelongest.ai
 
 ## 사용 기술
 

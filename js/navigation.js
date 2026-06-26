@@ -75,7 +75,7 @@ fadeElements.forEach((el) => observer.observe(el));
 
 // Hero 타이핑 효과 (보너스)
 const heroSubtitle = document.getElementById("hero-subtitle");
-const typingText = "Product Manager & AI Developer";
+const typingText = "I help people and brands work smarter through AI automation and vibe coding.";
 let charIndex = 0;
 
 const typeWriter = () => {
