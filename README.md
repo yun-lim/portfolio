@@ -104,10 +104,8 @@ git push -u origin main
 
 ## 배포 URL
 
-> 배포 후 아래 URL을 업데이트하세요.
-
-- **GitHub 저장소**: `https://github.com/yun-lim/portfolio`
-- **Live Site**: `https://yun-lim.github.io/portfolio/`
+- **GitHub 저장소**: https://github.com/yun-lim/portfolio
+- **Live Site**: https://yun-lim.github.io/portfolio/
 
 ## 스크린샷
 
